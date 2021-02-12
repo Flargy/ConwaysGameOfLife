@@ -1,0 +1,2 @@
+C:\C++Projects\ConwaysGameOfLife\Debug\ConwaysGameOfLife.exe
+C:\C++Projects\ConwaysGameOfLife\Debug\ConwaysGameOfLife.pdb

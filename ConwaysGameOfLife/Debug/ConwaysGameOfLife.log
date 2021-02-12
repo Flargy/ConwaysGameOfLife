@@ -1,0 +1,3 @@
+﻿  cell.cpp
+C:\C++Projects\ConwaysGameOfLife\cell.cpp(23,20): warning C4018: '<': signed/unsigned mismatch
+C:\C++Projects\ConwaysGameOfLife\cell.cpp(29,20): warning C4018: '<': signed/unsigned mismatch
