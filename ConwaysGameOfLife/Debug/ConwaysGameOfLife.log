@@ -1,3 +1,10 @@
 ﻿  cell.cpp
-C:\C++Projects\ConwaysGameOfLife\cell.cpp(23,20): warning C4018: '<': signed/unsigned mismatch
-C:\C++Projects\ConwaysGameOfLife\cell.cpp(29,20): warning C4018: '<': signed/unsigned mismatch
+C:\C++Projects\ConwaysGameOfLife\cell.cpp(19,20): warning C4018: '<': signed/unsigned mismatch
+C:\C++Projects\ConwaysGameOfLife\cell.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
+C:\C++Projects\ConwaysGameOfLife\cell.cpp(61,20): warning C4018: '<': signed/unsigned mismatch
+  gridManager.cpp
+  window.cpp
+C:\C++Projects\ConwaysGameOfLife\window.cpp(94,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\C++Projects\ConwaysGameOfLife\window.cpp(95,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  ConwaysGameOfLife.vcxproj -> C:\C++Projects\ConwaysGameOfLife\Debug\ConwaysGameOfLife.exe

@@ -7,11 +7,13 @@ public:
 	~Cell();
 
 	int ReturnLife();
-	void SetNeighbors(std::vector<Cell>);
+	void SetNeighbors(std::vector<Cell*>);
 	void CheckNeighborsLife();
 	void NextLifecycle();
-	int GetPosition();
-	int GetPosition2();
+	int GetPositionX();
+	int GetPositionY();
+	void SetState(bool state);
+	void DebugNeighbors();
 
 private:
 	int _xPosition;
@@ -20,5 +22,5 @@ private:
 	bool _aliveNextIteration = false;
 	//std::array<Cell*, 8> _neighbors = {nullptr};
 
-	std::vector<Cell> _neighbors;
+	std::vector<Cell*> _neighbors;
 };

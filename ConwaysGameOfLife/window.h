@@ -9,8 +9,10 @@ public:
 	~Window();
 
 	inline bool IsClosed() const { return _closed; }
-	void RenderAndPresent();
-	void PollEvents();
+	void SetBackground();
+	bool PollEvents();
+	void DrawRect(int height, int width, int xPos, int yPos, bool alive);
+	void PresentRenderer();
 
 private:
 	bool Init();

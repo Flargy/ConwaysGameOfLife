@@ -1,4 +1,5 @@
 #include "window.h"
+#include <iostream>
 
 Window::Window(const std::string& title, int width, int height) :
 	_title(title), _width(width), _height(height) 
@@ -37,33 +38,19 @@ bool Window::Init() {
 
 }
 
-void Window::RenderAndPresent() {
+void Window::SetBackground() {
 
 	SDL_SetRenderDrawColor(_renderer, 0, 0, 200, 255);
 	SDL_RenderClear(_renderer);
 
-	SDL_Rect rect;
-	rect.w = 10;
-	rect.h = 10;
-	rect.x = _width / 2 - 5;
-	rect.y = _height / 2 - 5;
-	SDL_SetRenderDrawColor(_renderer, 200, 0, 200, 255);
-	SDL_RenderFillRect(_renderer, &rect);
 	
-
-	SDL_Rect rect2;
-	rect2.w = 10;
-	rect2.h = 10;
-	rect2.x = _width / 2 + 5;
-	rect2.y = _height / 2 + 5;
-	SDL_SetRenderDrawColor(_renderer, 0, 200, 200, 255);
-	SDL_RenderFillRect(_renderer, &rect2);
-	SDL_RenderPresent(_renderer);
 }
 
 
-void Window::PollEvents() {
+bool Window::PollEvents() {
 	SDL_Event event;
+
+	
 
 	if (SDL_PollEvent(&event)) {
 		switch (event.type)
@@ -72,12 +59,22 @@ void Window::PollEvents() {
 			_closed = true;
 			break;
 
+		case SDL_MOUSEBUTTONDOWN:
+			std::cout << event.button.x << " " << event.button.y << std::endl ;
+			break;
+
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_ESCAPE:
 				_closed = true;
 				break;
+
+			case SDLK_SPACE:
+				return true;
+				break;
+			
+				
 			default:
 				break;
 			}
@@ -86,4 +83,28 @@ void Window::PollEvents() {
 			break;
 		}
 	}
+	
+
+	return false;
 }
+
+void Window::DrawRect(int height, int width, int xPos, int yPos, bool alive) {
+
+	SDL_Rect rect;
+	rect.w = width - 0.1;
+	rect.h = height - 0.1;
+	rect.x = xPos + 100;
+	rect.y = yPos + 100;
+	if (alive) {
+		SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+	}
+	else
+		SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(_renderer, &rect);
+}
+
+void Window::PresentRenderer() {
+	SDL_RenderPresent(_renderer);
+
+}
+
