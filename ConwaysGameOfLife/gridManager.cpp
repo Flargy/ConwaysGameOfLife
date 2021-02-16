@@ -2,65 +2,169 @@
 #include <iostream>
 #include "cell.h"
 
-GridManager::GridManager(int cellWidth, int cellHeight, Window* window) :
-	_cellWidth(cellWidth), _cellHeight(cellHeight), _window(window)
+/*
+GridManager::GridManager(int cellWidth, int cellHeight, Window* window, int dynamic) :
+	_cellWidth(cellWidth), _cellHeight(cellHeight), _window(window), dynamicValue(dynamic)
 {
+
 	CreateGrid();
 }
 
 GridManager::~GridManager() {
-	/*	for (int i = 0; i < 20; i++) {
-		delete[] _cellGrid[i];
+	
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+			delete _cellGrid[rows][columns];
+		}
 	}
 
-	delete[] _cellGrid;*/
+}
 
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
-			delete _cellGrid[rows][columns];
+void GridManager::CreateGrid() {
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+			_cellGrid[rows][columns] = new Cell(_cellWidth * rows, _cellHeight * columns, _cellWidth, _cellHeight);
+
+		}
+	}
+
+}
+
+void GridManager::CreateConnections() {
+
+	struct {
+		int dx;
+		int dy;
+	} directions[] = { {-1,-1,},{-1,0,},{-1,1},{0,-1},{0,1},{1,-1},{1,0},{1,1} };
+
+	int x = 0;
+	int y = 0;
+	std::vector<Cell*> adjacentCells;
+
+
+	for (int row = 0; row < _gridSize; row++) {
+		for (int column = 0; column < _gridSize; column++) {
+			for (int i = 0; i < 8; i++)
+			{
+				x = directions[i].dx;
+				y = directions[i].dy;
+				if (row + x < 0) {
+					x = _gridSize -1;
+				}
+				else if (row + x > _gridSize - 1) {
+					x = -_gridSize+ 1;
+				}
+				if (column + y < 0) {
+					y = _gridSize -1;
+				}
+				else if (column + y > _gridSize - 1) {
+					y = -_gridSize + 1;
+				}
+
+				adjacentCells.push_back((_cellGrid[row + x][column + y]));
+
+			}
+
+			(_cellGrid[row][column])->SetNeighbors(adjacentCells);
+
+			adjacentCells.clear();
+			
+		}
+	}
+	
+}
+
+void GridManager::CheckStatus() {
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+			(*_cellGrid[rows][columns]).CheckNeighborsLife();
 		}
 	}
 }
 
-void GridManager::CreateGrid() {
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
-			_cellGrid[rows][columns] = new Cell(_cellWidth * rows, _cellHeight * columns);
-
-			//glider
-
-			if (rows == 5 && columns == 5 ) { 
-				_cellGrid[rows][columns]->SetState(true);
-			}
-			else if (rows == 6 && columns == 5) {
-				_cellGrid[rows][columns]->SetState(true);
-			}
-			else if (rows == 7 && columns == 5) {
-				_cellGrid[rows][columns]->SetState(true);
-			}
-			else if (rows == 7 && columns == 4) {
-				_cellGrid[rows][columns]->SetState(true);
-			}
-			else if (rows == 6 && columns == 3) {
-				_cellGrid[rows][columns]->SetState(true);
-			}
-
-			//rotator
-
-			/*if (rows == 0 && columns == 0) { 
-				_cellGrid[rows][columns]->SetState(true);
-			}
-			else if (rows == 0 && columns == 1) {
-				_cellGrid[rows][columns]->SetState(true);
-			}
-
-			else if (rows == 0 && columns == 19) {
-				_cellGrid[rows][columns]->SetState(true);
-			}*/
+void GridManager::UpdateStatus() {
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+			(*_cellGrid[rows][columns]).NextLifecycle();
 		}
 	}
 
-	//CreateConnections();
+}
+
+void GridManager::FunctionTest(void (*f)()) {
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+		}
+	}
+}
+
+
+void GridManager::DebugGrid() {
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+			std::cout << (*_cellGrid[rows][columns]).GetPositionX() << std::endl;
+			std::cout << (*_cellGrid[rows][columns]).GetPositionY() << std::endl;
+		}
+
+	}
+}
+
+void GridManager::DrawCells() {
+	Cell* currentCell;
+	for (int rows = 0; rows < _gridSize; rows++) {
+		for (int columns = 0; columns < _gridSize; columns++) {
+			currentCell = _cellGrid[rows][columns];
+
+			_window->DrawRect(_cellHeight, _cellWidth, currentCell->GetPositionX(), currentCell->GetPositionY(), currentCell->ReturnLife());
+		}
+	}
+}
+
+void GridManager::ClickCell(std::vector<int> vec) {
+	Cell* currentCell = _cellGrid[vec[0]][vec[1]];
+	currentCell->Clicked();
+	_window->DrawRect(_cellHeight, _cellWidth, currentCell->GetPositionX(), currentCell->GetPositionY(), currentCell->ReturnLife());
+}
+*/
+
+
+
+
+
+
+
+GridManager::GridManager(int cellWidth, int cellHeight, Window* window, int dynamic) :
+	_cellWidth(cellWidth), _cellHeight(cellHeight), _window(window), dynamicValue(dynamic)
+{
+	testGrid = new Cell*[dynamicValue];
+	CreateGrid();
+}
+
+GridManager::~GridManager() {
+
+	for (int i = 0; i < dynamicValue; i++)
+	{
+		delete[] testGrid[i];
+	}
+
+	delete[] testGrid;
+
+}
+
+void GridManager::CreateGrid() {
+	for (int i = 0; i < dynamicValue; i++)
+	{
+		testGrid[i] = new Cell[dynamicValue];
+	}
+
+	for (int row = 0; row < dynamicValue; row++)
+	{
+		for (int column = 0; column < dynamicValue; column++)
+		{
+			testGrid[row][column].SetValues(_cellWidth * row, _cellHeight * column, _cellWidth, _cellHeight);
+		}
+	}
+
 }
 
 void GridManager::CreateConnections() {
@@ -76,73 +180,64 @@ void GridManager::CreateConnections() {
 	std::vector<Cell*> adjacentCells;
 
 
-	for (int row = 0; row < 30; row++) {
-		for (int column = 0; column < 30; column++) {
+	for (int row = 0; row < dynamicValue; row++) {
+		for (int column = 0; column < dynamicValue; column++) {
 			for (int i = 0; i < 8; i++)
 			{
 				x = directions[i].dx;
 				y = directions[i].dy;
 				if (row + x < 0) {
-					x = 29;
+					x = dynamicValue - 1;
 				}
-				else if (row + x > 29) {
-					x = -29;
+				else if (row + x > dynamicValue - 1) {
+					x = -dynamicValue + 1;
 				}
 				if (column + y < 0) {
-					y = 29;
+					y = dynamicValue - 1;
 				}
-				else if (column + y > 29) {
-					y = -29;
+				else if (column + y > dynamicValue - 1) {
+					y = -dynamicValue + 1;
 				}
 
-				adjacentCells.push_back((_cellGrid[row + x][column + y]));
-
-				//std::cout << "X: " << rows + x << " Y: " << columns + y << std::endl;
-
-				//std::cout <<"X pos: " << (_cellGrid[rows + x][columns + y])->GetPosition() << " Y pos: " << (_cellGrid[rows + x][columns + y])->GetPosition2() << std::endl;
-
+				adjacentCells.push_back(&(testGrid[row + x][column + y]));
 			}
 
-			(_cellGrid[row][column])->SetNeighbors(adjacentCells);
+			(testGrid[row][column]).SetNeighbors(adjacentCells);
 
 			adjacentCells.clear();
-			
 		}
 	}
-	
+
 }
 
 void GridManager::CheckStatus() {
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
-			(*_cellGrid[rows][columns]).CheckNeighborsLife();
+	for (int rows = 0; rows < dynamicValue; rows++) {
+		for (int columns = 0; columns < dynamicValue; columns++) {
+			(testGrid[rows][columns]).CheckNeighborsLife();
 		}
 	}
 }
 
 void GridManager::UpdateStatus() {
-	// call NextLifecycle on every cell here
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
-			(*_cellGrid[rows][columns]).NextLifecycle();
+	for (int rows = 0; rows < dynamicValue; rows++) {
+		for (int columns = 0; columns < dynamicValue; columns++) {
+			(testGrid[rows][columns]).NextLifecycle();
 		}
 	}
 
-	//FunctionTest(&Cell::NextLifecycle);
 }
 
 void GridManager::FunctionTest(void (*f)()) {
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
-			//(*_cellGrid[rows][columns]).(*f)();
+	for (int rows = 0; rows < dynamicValue; rows++) {
+		for (int columns = 0; columns < dynamicValue; columns++) {
 		}
 	}
 }
 
 
 void GridManager::DebugGrid() {
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
+	for (int rows = 0; rows < dynamicValue; rows++) {
+		for (int columns = 0; columns < dynamicValue; columns++) {
 			std::cout << (*_cellGrid[rows][columns]).GetPositionX() << std::endl;
 			std::cout << (*_cellGrid[rows][columns]).GetPositionY() << std::endl;
 		}
@@ -152,11 +247,17 @@ void GridManager::DebugGrid() {
 
 void GridManager::DrawCells() {
 	Cell* currentCell;
-	for (int rows = 0; rows < 30; rows++) {
-		for (int columns = 0; columns < 30; columns++) {
-			currentCell = _cellGrid[rows][columns];
+	for (int rows = 0; rows < dynamicValue; rows++) {
+		for (int columns = 0; columns < dynamicValue; columns++) {
+			currentCell = &testGrid[rows][columns];
 
 			_window->DrawRect(_cellHeight, _cellWidth, currentCell->GetPositionX(), currentCell->GetPositionY(), currentCell->ReturnLife());
 		}
 	}
+}
+
+void GridManager::ClickCell(std::vector<int> vec) {
+	Cell* currentCell = &testGrid[vec[0]][vec[1]];
+	currentCell->Clicked();
+	_window->DrawRect(_cellHeight, _cellWidth, currentCell->GetPositionX(), currentCell->GetPositionY(), currentCell->ReturnLife());
 }

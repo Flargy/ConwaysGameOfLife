@@ -1,8 +1,8 @@
 #include "cell.h"
 #include <iostream>
 
-Cell::Cell(int xPos, int yPos) :
-	_xPosition(xPos), _yPosition(yPos)
+Cell::Cell(int xPos, int yPos, int width, int height) :
+	_xPosition(xPos), _yPosition(yPos), _width(width), _height(height)
 {
 
 }
@@ -57,9 +57,20 @@ void Cell::SetState(bool state) {
 	_isAlive = state;
 }
 
-void Cell::DebugNeighbors() {
-	for (int i = 0; i < _neighbors.size(); i++) {
-		std::cout <<"X:" << _neighbors[i]->GetPositionX() << " Y:" << _neighbors[i]->GetPositionY() << std::endl;
-		_neighbors[i]->SetState(true);
-	}
+//void Cell::DebugNeighbors() {
+//	for (int i = 0; i < _neighbors.size(); i++) {
+//		std::cout <<"X:" << _neighbors[i]->GetPositionX() << " Y:" << _neighbors[i]->GetPositionY() << std::endl;
+//		_neighbors[i]->SetState(true);
+//	}
+//}
+
+void Cell::Clicked() {
+	_isAlive = !_isAlive;
+}
+
+void Cell::SetValues(int xPos, int yPos, int width, int height) {
+	_xPosition = xPos;
+	_yPosition = yPos;
+	_width = width;
+	_height = height;
 }

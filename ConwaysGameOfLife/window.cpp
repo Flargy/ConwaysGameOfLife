@@ -1,5 +1,6 @@
-#include "window.h"
 #include <iostream>
+#include "global.h"
+
 
 Window::Window(const std::string& title, int width, int height) :
 	_title(title), _width(width), _height(height) 
@@ -50,7 +51,7 @@ void Window::SetBackground() {
 bool Window::PollEvents() {
 	SDL_Event event;
 
-	
+	std::vector<int> positions;
 
 	if (SDL_PollEvent(&event)) {
 		switch (event.type)
@@ -60,7 +61,9 @@ bool Window::PollEvents() {
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
-			std::cout << event.button.x << " " << event.button.y << std::endl ;
+			positions.push_back(event.button.x/25);
+			positions.push_back(event.button.y / 25);
+			SelectCell(positions);
 			break;
 
 		case SDL_KEYDOWN:
@@ -93,14 +96,18 @@ void Window::DrawRect(int height, int width, int xPos, int yPos, bool alive) {
 	SDL_Rect rect;
 	rect.w = width - 0.1;
 	rect.h = height - 0.1;
-	rect.x = xPos + 100;
-	rect.y = yPos + 100;
+	rect.x = xPos ;
+	rect.y = yPos ;
 	if (alive) {
 		SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
 	}
 	else
 		SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
 	SDL_RenderFillRect(_renderer, &rect);
+}
+
+void Window::SelectCell(std::vector<int> positions) {
+	manager.ClickCell(positions);
 }
 
 void Window::PresentRenderer() {

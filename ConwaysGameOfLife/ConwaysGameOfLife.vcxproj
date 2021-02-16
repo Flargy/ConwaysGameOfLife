@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="gridManager.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

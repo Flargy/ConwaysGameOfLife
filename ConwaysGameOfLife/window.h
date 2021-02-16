@@ -2,6 +2,7 @@
 #include <string>
 #include <SDL.h>
 #include <iostream>
+#include <vector>
 
 class Window {
 public:
@@ -13,6 +14,7 @@ public:
 	bool PollEvents();
 	void DrawRect(int height, int width, int xPos, int yPos, bool alive);
 	void PresentRenderer();
+	void SelectCell(std::vector<int> vec);
 
 private:
 	bool Init();
